@@ -1,13 +1,6 @@
 const SignupForm = document.getElementById('signupForm');
 const errorDisplay = document.getElementById('error-message');
 
-// Supabase configuration
-const SUPABASE_URL = "https://rvbccjhzifuuvtcodiax.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2YmNjamh6aWZ1dXZ0Y29kaWF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDA4OTUsImV4cCI6MjA5MzQxNjg5NX0.0wSntxEPJAPjP_egA_Z32qyl8vuDLkP1_yMQb-tSnzg";
-
-// Initialize Supabase
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 // Toggle password visibility
 function setupToggles() {
     const togglePassword = document.querySelector('#togglePassword');
@@ -36,8 +29,8 @@ function setupToggles() {
 
 setupToggles();
 
-// Signup form handler
-SignupForm.addEventListener('submit', async (e) => {
+// Signup form handler (NO async - simple version)
+SignupForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
     const fullName = document.getElementById('fullName').value.trim();
@@ -63,40 +56,25 @@ SignupForm.addEventListener('submit', async (e) => {
         return;
     }
 
-    // 1. Save to localStorage (always works)
+    // Save to localStorage
     const newUser = { fullName, username, email, password };
     localStorage.setItem('registeredUser', JSON.stringify(newUser));
     
-    // 2. Try to save to Supabase (optional - doesn't break anything)
-    try {
-        const { error } = await supabase
-            .from('app_users')
-            .insert([{
-                full_name: fullName,
-                username: username,
-                email: email,
-                password: password
-            }]);
-        
-        if (error) {
-            console.log("Supabase error (non-critical):", error.message);
-        } else {
-            console.log("✅ User also saved to Supabase!");
-        }
-    } catch(err) {
-        console.log("Supabase not available, but localStorage works.");
+    console.log("User saved:", newUser);
+    
+    // Show popup
+    const successPopup = document.getElementById('successPopup');
+    if (successPopup) {
+        successPopup.classList.add('show');
     }
     
-    // Show success popup
-    const successPopup = document.getElementById('successPopup');
-    successPopup.classList.add('show');
-
-    document.getElementById('popupOkBtn').onclick = function() {
-        window.location.href = 'login.html';
-    };
+    const okBtn = document.getElementById('popupOkBtn');
+    if (okBtn) {
+        okBtn.onclick = function() {
+            window.location.href = 'login.html';
+        };
+    }
 });
-
-
 /*const SignupForm = document.getElementById('signupForm');
 const errorDisplay = document.getElementById('error-message');
 
