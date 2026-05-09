@@ -1,7 +1,15 @@
 const SignupForm = document.getElementById('signupForm');
 const errorDisplay = document.getElementById('error-message');
 
-SignupForm.addEventListener('submit', (e) => {
+// Supabase configuration
+const SUPABASE_URL = "https://rvbccjhzifuuvtcodiax.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2YmNjamh6aWZ1dXZ0Y29kaWF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDA4OTUsImV4cCI6MjA5MzQxNjg5NX0.0wSntxEPJAPjP_egA_Z32qyl8vuDLkP1_yMQb-tSnzg";
+
+// Initialize Supabase
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+SignupForm.addEventListener('submit',  async (e) => {
     e.preventDefault();
     
     const fullName = document.getElementById('fullName').value.trim();
@@ -31,6 +39,26 @@ SignupForm.addEventListener('submit', (e) => {
     const newUser = { fullName, username, email, password };
     localStorage.setItem('registeredUser', JSON.stringify(newUser));
     
+ // 2. Try to save to Supabase (optional - doesn't break anything)
+    try {
+        const { error } = await supabase
+            .from('app_users')
+            .insert([{
+                full_name: fullName,
+                username: username,
+                email: email,
+                password: password
+            }]);
+        
+        if (error) {
+            console.log("Supabase error (non-critical):", error.message);
+        } else {
+            console.log("✅ User also saved to Supabase!");
+        }
+    } catch(err) {
+        console.log("Supabase not available, but localStorage works.");
+    }
+
     // Show popup
     const successPopup = document.getElementById('successPopup');
     successPopup.classList.add('show');
