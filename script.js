@@ -45,7 +45,7 @@ function setupToggles() {
 setupToggles();
 
 // Signup form handler (NO async - simple version)
-SignupForm.addEventListener('submit', async (e) => {
+SignupForm.addEventListener('submit', function(e){
     e.preventDefault();
     
     const fullName = document.getElementById('fullName').value.trim();
@@ -71,26 +71,29 @@ SignupForm.addEventListener('submit', async (e) => {
         return;
     }
 
-try {
-        // 1. Create user in Firebase Authentication
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const userId = userCredential.user.uid;
-        
-        // 2. Save user data to Firestore
-        await db.collection('users').doc(userId).set({
-            fullName: fullName,
-            username: username,
-            email: email,
-            createdAt: new Date()
-        });
+      // Show "processing" message
+    errorDisplay.innerText = "Creating account...";
+    errorDisplay.style.color = "blue";
 
-    // Save to localStorage
-    const newUser = { fullName, username, email, password };
-    localStorage.setItem('registeredUser', JSON.stringify(newUser));
-    
-    console.log("User saved:", newUser);
-    
-    // Show popup
+// Create user in Firebase Auth
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            const userId = userCredential.user.uid;
+            
+            // Save user data to Firestore
+            return db.collection('users').doc(userId).set({
+                fullName: fullName,
+                username: username,
+                email: email,
+                createdAt: new Date()
+            }).then(() => {
+                // Save to localStorage as backup
+                const newUser = { fullName, username, email, password };
+                localStorage.setItem('registeredUser', JSON.stringify(newUser));
+                
+                console.log("✅ User saved to Firebase!");
+             
+                // Show success popup    
     const successPopup = document.getElementById('successPopup');
     if (successPopup) {
         successPopup.classList.add('show');
@@ -102,10 +105,12 @@ try {
             window.location.href = 'login.html';
         };
     }
-
-    } catch (error) {
+});
+     })
+.catch((error) =>{
         console.error("Firebase error:", error);
         errorDisplay.innerText = error.message;
-    }
+         errorDisplay.style.color = "red";
+    });
+ });
 
-});
