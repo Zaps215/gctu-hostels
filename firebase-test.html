@@ -4,10 +4,10 @@
     <title>Firebase Test</title>
 </head>
 <body>
-    <h1>Firebase Connection Test</h1>
-    <button id="testBtn">Test Firebase</button>
+    <h1>Firebase Test</h1>
+    <button onclick="testFirebase()">Test Firebase</button>
     <p id="result"></p>
-    
+
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase.js"></script>
     <script>
         const firebaseConfig = {
@@ -22,19 +22,20 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         
-        document.getElementById("testBtn").onclick = function() {
-            document.getElementById("result").innerHTML = "Testing...";
+        function testFirebase() {
+            const result = document.getElementById('result');
+            result.innerHTML = "Testing...";
             
-            auth.createUserWithEmailAndPassword("test123@example.com", "test123456")
-                .then(function() {
-                    document.getElementById("result").innerHTML = "✅ Firebase works! User created!";
-                    document.getElementById("result").style.color = "green";
+            auth.createUserWithEmailAndPassword("test999@example.com", "test123456")
+                .then(() => {
+                    result.innerHTML = "✅ SUCCESS! Firebase works!";
+                    result.style.color = "green";
                 })
-                .catch(function(error) {
-                    document.getElementById("result").innerHTML = "Error: " + error.message;
-                    document.getElementById("result").style.color = "red";
+                .catch((error) => {
+                    result.innerHTML = "Error: " + error.message;
+                    result.style.color = "red";
                 });
-        };
+        }
     </script>
 </body>
 </html>
