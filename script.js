@@ -45,7 +45,7 @@ function setupToggles() {
 setupToggles();
 
 // Signup form handler (NO async - simple version)
-SignupForm.addEventListener('submit', function(e) {
+SignupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const fullName = document.getElementById('fullName').value.trim();
@@ -107,5 +107,5 @@ try {
         console.error("Firebase error:", error);
         errorDisplay.innerText = error.message;
     }
-    
+
 });
