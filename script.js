@@ -12,12 +12,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase (if SDK is loaded)
-if (typeof firebase !== 'undefined') {
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    console.log("Firebase ready");
-}
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+console.log("Firebase initialized");
 
 // Toggle password visibility
 function setupToggles() {
