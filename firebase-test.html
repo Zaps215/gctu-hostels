@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Test</title>
+</head>
+<body>
+    <h1>Firebase Connection Test</h1>
+    <button id="testBtn">Test Firebase</button>
+    <p id="result"></p>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAx2mhVjPurrxCdonpbWcnLfl2jpNtl9xg",
+            authDomain: "gctu-hostels.firebaseapp.com",
+            projectId: "gctu-hostels",
+            storageBucket: "gctu-hostels.firebasestorage.app",
+            messagingSenderId: "187198065351",
+            appId: "1:187198065351:web:8c2ba3f0bedb4c58898ce2"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        document.getElementById("testBtn").onclick = function() {
+            document.getElementById("result").innerHTML = "Testing...";
+            
+            auth.createUserWithEmailAndPassword("test123@example.com", "test123456")
+                .then(function() {
+                    document.getElementById("result").innerHTML = "✅ Firebase works! User created!";
+                    document.getElementById("result").style.color = "green";
+                })
+                .catch(function(error) {
+                    document.getElementById("result").innerHTML = "Error: " + error.message;
+                    document.getElementById("result").style.color = "red";
+                });
+        };
+    </script>
+</body>
+</html>
