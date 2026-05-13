@@ -202,6 +202,13 @@
             justify-content: center;
             font-size: 60px;
             color: #2b5f8a;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .card-content {
@@ -731,16 +738,23 @@
             {
                 id: 1,
                 name: "Unidaz Hostel",
+                image: "https://images.unsplash.com/photo-1709805619372-40de3f158e83?w=400",
                 location: "Near GCTU Main Gate",
                 price: "GHS 2,400/sem",
                 amenities: ["WiFi", "Study Area", "Security", "AC"],
+<<<<<<< Updated upstream
                 officialUrl: "https://www.unidazh.com", icon: "fa-university",
 
+=======
+                officialUrl: "https://www.unidazh.com",
+                icon: "fa-university"
+>>>>>>> Stashed changes
             },
 
             {
                 id: 2,
                 name: "Palace Hostel",
+                image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400",
                 location: "5 mins from GCTU",
                 price: "GHS 2,500/sem",
                 amenities: ["WiFi", "Study Area", "Security"],
@@ -751,12 +765,14 @@
             {
                 id: 3,
                 name: "Delicious Hostel",
+                image: "https://images.unsplash.com/photo-1623625434462-e5e42318ae49?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aG9zdGVsfGVufDB8fDB8fHww",
                 location: "Walking distance to campus", price: "GHS 2,800/sem",
                 amenities: ["WiFi", "AC", "Water Supply"], officialUrl: "https://www.delicioushostel.com",
                 icon: "fa-building"
             },
             {
                 id: 4, name: "Zack B Hostel",
+                image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400",
                 location: "Near Tesano Junction",
                 price: "GHS 3,000/sem",
                 amenities: ["WiFi", "Study Area", "Parking"],
@@ -791,7 +807,7 @@
             grid.innerHTML = hostelsData.map(hostel => `
             <div class="hostel-card">
                 <div class="card-img">
-                    <i class="fas ${hostel.icon}"></i>
+                    <img src="${hostel.image}" alt="${hostel.name}">
                 </div>
                 <div class="card-content">
                     <div class="card-title">
