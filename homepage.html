@@ -401,7 +401,7 @@
 
 
 
-        /* ========== RESPONSIVE MEDIA QUERIES ========== */
+        /*  RESPONSIVE MEDIA QUERIES  */
 
         /* Tablet Devices (768px and below) */
         @media (max-width: 768px) {
@@ -693,18 +693,6 @@
             for students</p>
     </footer>
 
-    <!-- Logout Modal -->
-    <div id="logoutModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-icon">🚪</div>
-            <h2>Logout Confirmation</h2>
-            <p>Are you sure you want to logout from <strong>GCTU StudentHostels</strong>?</p>
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-cancel" id="cancelLogoutBtn">Cancel</button>
-                <button class="modal-btn modal-btn-logout" id="confirmLogoutBtn">Yes, Logout</button>
-            </div>
-        </div>
-    </div>
 
     <script>
         // Load user from registration
@@ -754,7 +742,11 @@
             {
                 id: 2,
                 name: "Palace Hostel",
+<<<<<<< HEAD
                 image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400",
+=======
+                image: "https://images.unsplash.com/photo-1608198399988-341f712c3711?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvc3RlbHxlbnwwfHwwfHx8MA%3D%3D",
+>>>>>>> 4372f1e509d96eb6beb4b0f87cdedec1e0857464
                 location: "5 mins from GCTU",
                 price: "GHS 2,500/sem",
                 amenities: ["WiFi", "Study Area", "Security"],
@@ -772,7 +764,11 @@
             },
             {
                 id: 4, name: "Zack B Hostel",
+<<<<<<< HEAD
                 image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400",
+=======
+                image: "https://images.unsplash.com/photo-1709805619372-40de3f158e83?w=400",
+>>>>>>> 4372f1e509d96eb6beb4b0f87cdedec1e0857464
                 location: "Near Tesano Junction",
                 price: "GHS 3,000/sem",
                 amenities: ["WiFi", "Study Area", "Parking"],
@@ -807,7 +803,11 @@
             grid.innerHTML = hostelsData.map(hostel => `
             <div class="hostel-card">
                 <div class="card-img">
+<<<<<<< HEAD
                     <img src="${hostel.image}" alt="${hostel.name}">
+=======
+                    <img src="${hostel.image}" alt="${hostel.name}" style="width: 100%; height: 100%; object-fit: cover;">
+>>>>>>> 4372f1e509d96eb6beb4b0f87cdedec1e0857464
                 </div>
                 <div class="card-content">
                     <div class="card-title">
@@ -863,24 +863,6 @@
             document.getElementById('totalSpent').innerText = calculateTotalSpent();
         }
 
-        // Logout Modal Setup
-        /* function setupLogoutModal() {
-             const logoutBtn = document.getElementById('logoutBtn');
-             const modal = document.getElementById('logoutModal');
-             const cancelBtn = document.getElementById('cancelLogoutBtn');
-             const confirmBtn = document.getElementById('confirmLogoutBtn');
- 
-             logoutBtn.onclick = () => modal.classList.add('show');
-             cancelBtn.onclick = () => modal.classList.remove('show');
-             confirmBtn.onclick = () => {
-                 localStorage.removeItem('registeredUser');
-                 window.location.href = 'login.html';
-             };
-             modal.onclick = (e) => {
-                 if (e.target === modal) modal.classList.remove('show');
-             };
-         }*/
-
 
         // Setup logout modal
         const logoutBtn = document.getElementById('logoutBtn');
@@ -924,7 +906,6 @@
             renderHostels();
             renderActivity();
             updateDashboardStats();
-            setupLogoutModal();
         }
 
         initHomepage();
