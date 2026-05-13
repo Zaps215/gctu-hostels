@@ -3,6 +3,7 @@
                 {
                     id: 1,
                     name: "Unidaz Hostel",
+                     image: "https://images.unsplash.com/photo-1709805619372-40de3f158e83?w=400",
                     location: "Ghana Communication Technology University, Tesano - Accra",
                     price:  2400,
                     priceLabel: "GHS 2,400/sem",
@@ -18,6 +19,7 @@
                 {
                     id: 2,
                     name: "Palace Hostel",
+                    image: "https://images.unsplash.com/photo-1608198399988-341f712c3711?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvc3RlbHxlbnwwfHwwfHx8MA%3D%3D",
                     location: "Ghana Communication Technology University, Tesano  - Accra",
                     price: 2500,
                     priceLabel: "GHS 2,500/sem",
@@ -33,6 +35,7 @@
                 {
                     id: 3,
                     name: "Delicious Hostel",
+                     image: "https://images.unsplash.com/photo-1623625434462-e5e42318ae49?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aG9zdGVsfGVufDB8fDB8fHww",
                     location: "Ghana Communication Technology University, Tesano  - Accra",
                     price: 2800,
                     priceLabel: "GHS 2,400/sem",
@@ -45,8 +48,9 @@
                     nearby: true
                 
                 },{
-                    id: 3,
+                    id: 4,
                     name: "Delicious Hostel (Annex)",
+                     image: "https://images.unsplash.com/photo-1620332372374-f108c53d2e03?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGhvc3RlbHxlbnwwfHwwfHx8MA%3D%3D",
                     location: "Ghana Communication Technology University, Tesano  - Accra",
                     price: 2930,
                     priceLabel: "GHS 2,930/sem",
@@ -60,8 +64,9 @@
                 
                 },
                 {
-                    id: 4,
+                    id: 5,
                     name: "Zack B Hostel",
+                     image: "https://images.unsplash.com/photo-1709805619372-40de3f158e83?w=400",
                     location: "Ghana Communication Technology University, Tesano  - Accra",
                     price: 3000,
                     priceLabel: "GHS 3,000/sem",
@@ -73,8 +78,9 @@
                     category: "budget",
                      far: true
                 }, {
-                    id: 4,
+                    id: 6,
                     name: "Zack B Hostel (Annex)",
+                    image: "https://images.unsplash.com/photo-1709805619372-40de3f158e83?w=400",
                     location: "Ghana Communication Technology University, Tesano  - Accra",
                     price: 3200,
                     priceLabel: "GHS 3,200/sem",
@@ -176,7 +182,7 @@
             grid.innerHTML = filtered.map(hostel => `
             <div class="hostel-card" data-id="${hostel.id}">
                 <div class="card-img">
-                    <i class="fas ${hostel.icon}"></i>
+                     <img src="${hostel.image}" alt="${hostel.name}">
                 </div>
                 <div class="card-content">
                     <div class="card-title">
