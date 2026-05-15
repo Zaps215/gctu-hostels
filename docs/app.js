@@ -23,7 +23,7 @@ loginForm.addEventListener('submit', async function(e) {
     errorDisplay.innerText = "";
 
     try {
-        console.log("Sending login request...");
+        console.log("Sending login request to backend...");
         // Send to backend API (NOT localStorage)
         const response = await fetch('https://gctu-hostels.onrender.com/api/login', {
             method: 'POST',
@@ -38,28 +38,13 @@ loginForm.addEventListener('submit', async function(e) {
             // Save user to localStorage (for frontend state)
             localStorage.setItem('registeredUser', JSON.stringify(data.user));
 
-    /* Get user from localStorage
-    const savedData = localStorage.getItem('registeredUser');
-
-    if (!savedData) {
-        errorDisplay.innerText = "No account found! Please sign up first.";
-        return;
-    }
-
-    const user = JSON.parse(savedData);
-    console.log("Saved user:", user);
-    console.log("Input username:", inputUsername);
-    console.log("Input password:", inputPassword);
-
-    // Check credentials
-    if (inputUsername === user.username && inputPassword === user.password) {*/
 
         // Show success popup
         const loginPopup = document.getElementById('loginPopup');
         const popupMessage = document.getElementById('popupMessage');
         
         const userName = data.user.fullName || data.user.username || 'Student';
-        popupMessage.innerHTML = `Welcome back, ${userName}! Redirecting to Homepage...`;
+        popupMessage.innerHTML = `Welcome back, ${data.user.fullName}! Redirecting to Homepage...`;
         
         loginPopup.classList.add('show');
         
