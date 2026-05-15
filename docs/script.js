@@ -32,7 +32,7 @@ function setupToggles() {
 setupToggles();
 
 // Signup form handler
-SignupForm.addEventListener('submit', function(e) {
+SignupForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const fullName = document.getElementById('fullName').value.trim();
@@ -58,11 +58,23 @@ SignupForm.addEventListener('submit', function(e) {
         return;
     }
 
-    // 1. Save to localStorage (ALWAYS works)
+
+    try {
+        // Send to backend API
+        const response = await fetch('https://gctu-hostels.onrender.com/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fullName, username, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+    /* 1. Save to localStorage (ALWAYS works)
     const newUser = { fullName, username, email, password };
     localStorage.setItem('registeredUser', JSON.stringify(newUser));
     console.log("✅ Saved to localStorage");
-
+*/
    
     // Show success popup
     const successPopup = document.getElementById('successPopup');
@@ -75,5 +87,12 @@ SignupForm.addEventListener('submit', function(e) {
         okBtn.onclick = function() {
             window.location.href = 'login.html';
         };
+    }
+        } else {
+            errorDisplay.innerText = data.error || "Signup failed!";
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        errorDisplay.innerText = "Cannot connect to server. Make sure backend is running.";
     }
 });

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>StudentHaven | Hostels for Students — Reviews & Listings</title>
+    <!-- Google Fonts for modern typography -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome 6 (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fefcf5;
+            color: #1e2a2f;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* ---------- STATIC NAVBAR (always visible) ---------- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+            /* static = just normal flow, no sticky/fixed, but remains at top */
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #2b5f8a, #1f8a7c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo span {
+            color: #f4a261;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #2c3e3f;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #f4a261;
+        }
+
+        .btn-outline {
+            border: 2px solid #2b5f8a;
+            background: transparent;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #2b5f8a;
+        }
+
+        .btn-outline:hover {
+            background: #2b5f8a;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #f4a261;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1e2a2f;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-primary:hover {
+            background: #e76f51;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 48px;
+            padding: 48px 0 64px 0;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #1e2a2f;
+        }
+
+        .hero-highlight {
+            color: #f4a261;
+            border-bottom: 3px solid #f4a261;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #4a5b5e;
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .stat h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2b5f8a;
+        }
+
+        .hero-image {
+            flex: 1;
+            background: #d9e6e2;
+            border-radius: 40px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-image i {
+            font-size: 180px;
+            color: #2b5f8a;
+        }
+
+        /* search / filter bar (only for browsing, no booking action) */
+        .search-section {
+            background: white;
+            border-radius: 60px;
+            padding: 16px 24px;
+            margin: 20px 0 40px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            background: #f8f5ee;
+            border-radius: 60px;
+            padding: 6px 18px;
+            gap: 12px;
+        }
+
+        .search-box i {
+            color: #f4a261;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 14px 0;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f8f5ee;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #2b5f8a;
+            color: white;
+        }
+
+        /* Hostels Cards Grid — view only, no booking buttons */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0 20px 0;
+        }
+
+        .hostels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .hostel-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.2s;
+        }
+
+        .hostel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 28px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img {
+            background: #cfe3df;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: #2b5f8a;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .price {
+            color: #e76f51;
+            font-weight: 800;
+        }
+
+        .location {
+            color: #6c7e82;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .amenity-tag {
+            background: #f0eee9;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* view-only badge instead of book button */
+        .view-badge {
+            background: #e9ecef;
+            text-align: center;
+            padding: 10px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #2b5f8a;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        /* ------ NEW: STUDENT TESTIMONIALS SECTION ------ */
+        .testimonials-section {
+            background: #ffffffea;
+            border-radius: 48px;
+            padding: 48px 32px;
+            margin: 40px 0 60px;
+            box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0e5d8;
+        }
+
+        .section-title-center {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 48px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .testimonial-card {
+            background: #fefaf5;
+            border-radius: 32px;
+            padding: 28px 24px;
+            transition: all 0.2s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid #f2e5d8;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            border-color: #f4a26140;
+        }
+
+        .rating {
+            color: #f4a261;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #2c3e3f;
+            margin-bottom: 20px;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-top: 1px solid #f0e2d4;
+            padding-top: 18px;
+        }
+
+        .student-avatar {
+            width: 48px;
+            height: 48px;
+            background: #d9e6e2;
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #2b5f8a;
+        }
+
+        .student-details h4 {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .student-details p {
+            font-size: 0.8rem;
+            color: #7c8b8d;
+        }
+
+        footer {
+            background: #e6edea;
+            margin-top: 60px;
+            padding: 32px 0;
+            text-align: center;
+            border-radius: 40px 40px 0 0;
+        }
+
+        @media (max-width: 780px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .search-section {
+                flex-direction: column;
+                border-radius: 32px;
+            }
+
+            .testimonials-section {
+                padding: 32px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- STATIC NAVBAR - no sticky, just normal header; no booking links -->
+        <nav class="navbar">
+            <div class="logo">Student<span>Haven</span> <i class="fas fa-bed"
+                    style="font-size: 24px; color: #f4a261;"></i></div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#hostels">Hostels</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <button class="btn-outline" id="infoBtn"><i class="fas fa-info-circle"></i> Student guide</button>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Find your <span class="hero-highlight">home</span> near campus <br> Budget-friendly stays</h1>
+                <p>Safe, affordable hostels curated for students. Fully furnished, high-speed WiFi & study zones.</p>
+                <button class="btn-primary" id="exploreCta">Explore hostels <i class="fas fa-arrow-right"></i></button>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>150+</h3>
+                        <p>Hostels</p>
+                    </div>
+                    <div class="stat">
+                        <h3>4.8⭐</h3>
+                        <p>Student rating</p>
+                    </div>
+                    <div class="stat">
+                        <h3>24/7</h3>
+                        <p>Support</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-building-user"></i>
+                <p style="margin-top: 12px;">🏡 Secure & cozy rooms</p>
+            </div>
+        </section>
+
+        <!-- search & filter - only for viewing hostels -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by hostel name or location...">
+            </div>
+            <div class="filter-group" id="filterGroup">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="budget">Budget (< ₹8k)</button>
+                        <button class="filter-btn" data-filter="premium">Premium (WiFi+AC)</button>
+                        <button class="filter-btn" data-filter="nearby">Nearby Uni</button>
+            </div>
+        </div>
+
+        <!-- Hostels Section (view only, no booking) -->
+        <div class="section-title" id="hostels">🏠 Top rated student hostels</div>
+        <div id="hostelsGrid" class="hostels-grid"></div>
+
+        <!-- ********** STUDENT TESTIMONIALS / REVIEWS SECTION ********** -->
+        <div class="testimonials-section" id="testimonials">
+            <div class="section-title-center">
+                ⭐ Real student reviews ⭐
+                <p style="font-size: 1rem; font-weight: normal; margin-top: 8px;">What scholars say about living with us
+                </p>
+            </div>
+            <div class="testimonials-grid" id="testimonialsGrid">
+                <!-- dynamic testimonials injected from js -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 StudentHaven — Safe stays, smarter living. <i class="fas fa-heart" style="color:#f4a261;"></i> for
+            students</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">🔍 Browse hostels & read authentic reviews — no booking required,
+            just explore.</p>
+    </footer>
+
+    <!-- simple toast for info / non-booking messages -->
+    <div id="infoToast" class="toast-msg" style="display: none;">✨ Message</div>
+
+    <style>
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e2a2f;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 500;
+            z-index: 1100;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 550px) {
+            .toast-msg {
+                white-space: normal;
+                width: 80%;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script>
+        // ---------- HOSTEL DATA (view-only, no booking) ----------
+        const hostelsData = [
+            {
+                id: 1,
+                name: "Sunrise Dorms",
+                location: "Near Delhi University, North Campus",
+                price: 6500,
+                priceLabel: "₹6,500/month",
+                amenities: ["WiFi", "Mess optional", "Study table", "Security"],
+                category: "budget",
+                icon: "fa-sun",
+                nearbyUni: true
+            },
+            {
+                id: 2,
+                name: "Elite Residency",
+                location: "Opposite IIT Main Gate",
+                price: 12500,
+                priceLabel: "₹12,500/month",
+                amenities: ["AC Room", "High-speed WiFi", "Gym", "Laundry"],
+                category: "premium",
+                icon: "fa-crown",
+                nearbyUni: true
+            },
+            {
+                id: 3,
+                name: "Campus Nest",
+                location: "Walking distance to Christ University",
+                price: 7800,
+                priceLabel: "₹7,800/month",
+                amenities: ["WiFi", "Parking", "Common Kitchen", "Study lounge"],
+                category: "budget",
+                icon: "fa-graduation-cap",
+                nearbyUni: true
+            },
+            {
+                id: 4,
+                name: "Green Villa Hostel",
+                location: "5 km from Anna University",
+                price: 8900,
+                priceLabel: "₹8,900/month",
+                amenities: ["Vegetarian mess", "WiFi", "24/7 water", "Garden"],
+                category: "budget",
+                icon: "fa-leaf",
+                nearbyUni: false
+            },
+            {
+                id: 5,
+                name: "The Scholar's Hub",
+                location: "Near Banaras Hindu University",
+                price: 9990,
+                priceLabel: "₹9,990/month",
+                amenities: ["Premium WiFi", "AC", "Attached washroom", "Tiffin service"],
+                category: "premium",
+                icon: "fa-chalkboard-user",
+                nearbyUni: true
+            },
+            {
+                id: 6,
+                name: "Student Stay Inn",
+                location: "Close to Mumbai University, Andheri",
+                price: 7200,
+                priceLabel: "₹7,200/month",
+                amenities: ["Shared room", "Lockers", "Common TV", "WiFi"],
+                category: "budget",
+                icon: "fa-users",
+                nearbyUni: true
+            }
+        ];
+
+        // ---------- STUDENT REVIEWS (testimonials) ----------
+        const testimonialsData = [
+            {
+                id: 1,
+                name: "Priya Mehta",
+                university: "Delhi University",
+                rating: 5,
+                text: "StudentHaven made finding a hostel near campus incredibly easy. The rooms are clean, WiFi is fast, and the wardens are super helpful! Felt like home away from home.",
+                avatarIcon: "fa-female"
+            },
+            {
+                id: 2,
+                name: "Rahul Sharma",
+                university: "IIT Bombay",
+                rating: 4.8,
+                text: "Affordable and safe. I stayed at Elite Residency — AC, study lounge, and great food. The filters helped me compare prices at a glance. Highly recommended!",
+                avatarIcon: "fa-user-graduate"
+            },
+            {
+                id: 3,
+                name: "Anjali Krishnan",
+                university: "Christ University",
+                rating: 5,
+                text: "I loved the 'nearby uni' filter. Found Campus Nest within walking distance. The staff is friendly and they organize weekend events for students. 10/10!",
+                avatarIcon: "fa-chalkboard-user"
+            },
+            {
+                id: 4,
+                name: "Divyansh Patil",
+                university: "Mumbai University",
+                rating: 4.5,
+                text: "Green Villa was budget-friendly and the vibe is amazing. 24/7 water and friendly owners. The testimonials on this site are genuine — I experienced the same warmth.",
+                avatarIcon: "fa-book-open"
+            }
+        ];
+
+        let currentFilter = "all";
+        let searchTerm = "";
+
+        // Helper: render hostels (view only, show "view details" badge instead of booking button)
+        function renderHostels() {
+            const grid = document.getElementById("hostelsGrid");
+            if (!grid) return;
+
+            let filtered = [...hostelsData];
+
+            if (currentFilter === "budget") {
+                filtered = filtered.filter(h => h.price < 8000);
+            } else if (currentFilter === "premium") {
+                filtered = filtered.filter(h => h.category === "premium");
+            } else if (currentFilter === "nearby") {
+                filtered = filtered.filter(h => h.nearbyUni === true);
+            }
+
+            if (searchTerm.trim() !== "") {
+                const term = searchTerm.trim().toLowerCase();
+                filtered = filtered.filter(h =>
+                    h.name.toLowerCase().includes(term) ||
+                    h.location.toLowerCase().includes(term)
+                );
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:60px;">🏝️ No hostels match, try different filters.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(hostel => `
+            <div class="hostel-card" data-id="${hostel.id}">
+                <div class="card-img">
+                    <i class="fas ${hostel.icon}"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">
+                        ${hostel.name}
+                        <span class="price">${hostel.priceLabel}</span>
+                    </div>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i> ${hostel.location}</div>
+                    <div class="amenities">
+                        ${hostel.amenities.slice(0, 3).map(am => `<span class="amenity-tag">${am}</span>`).join('')}
+                        ${hostel.amenities.length > 3 ? `<span class="amenity-tag">+${hostel.amenities.length - 3}</span>` : ''}
+                    </div>
+                    <!-- view-only badge instead of booking button -->
+                    <div class="view-badge"><i class="fas fa-eye"></i> View only — check reviews below</div>
+                </div>
+            </div>
+        `).join('');
+        }
+
+        // Render student testimonials dynamically
+        function renderTestimonials() {
+            const container = document.getElementById("testimonialsGrid");
+            if (!container) return;
+
+            const starsRenderer = (rating) => {
+                let fullStars = Math.floor(rating);
+                let halfStar = (rating % 1) >= 0.3 ? true : false; // small design trick
+                let starHtml = "";
+                for (let i = 0; i < fullStars; i++) starHtml += '<i class="fas fa-star"></i>';
+                if (halfStar) starHtml += '<i class="fas fa-star-half-alt"></i>';
+                let remaining = 5 - Math.ceil(rating);
+                for (let i = 0; i < remaining; i++) starHtml += '<i class="far fa-star"></i>';
+                return starHtml;
+            };
+
+            container.innerHTML = testimonialsData.map(test => `
+            <div class="testimonial-card">
+                <div class="rating">
+                    ${starsRenderer(test.rating)}
+                </div>
+                <div class="testimonial-text">“${test.text}”</div>
+                <div class="student-info">
+                    <div class="student-avatar">
+                        <i class="fas ${test.avatarIcon}"></i>
+                    </div>
+                    <div class="student-details">
+                        <h4>${test.name}</h4>
+                        <p>${test.university}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        }
+
+        // show info toast for non-booking actions (student guide / info)
+        function showInfoMessage(message) {
+            const toast = document.getElementById("infoToast");
+            toast.textContent = message;
+            toast.style.display = "block";
+            toast.style.opacity = "1";
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                setTimeout(() => {
+                    toast.style.display = "none";
+                    toast.style.opacity = "1";
+                }, 300);
+            }, 2500);
+        }
+
+        // event listeners (no booking modals, just browsing & reviews)
+        function setupEventListeners() {
+            const filterBtns = document.querySelectorAll(".filter-btn");
+            filterBtns.forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    filterBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    currentFilter = btn.getAttribute("data-filter");
+                    renderHostels();
+                });
+            });
+
+            const searchInput = document.getElementById("searchInput");
+            searchInput.addEventListener("input", (e) => {
+                searchTerm = e.target.value;
+                renderHostels();
+            });
+
+            const exploreBtn = document.getElementById("exploreCta");
+            if (exploreBtn) {
+                exploreBtn.addEventListener("click", () => {
+                    document.getElementById("hostels").scrollIntoView({ behavior: "smooth" });
+                });
+            }
+
+            const infoNavBtn = document.getElementById("infoBtn");
+            if (infoNavBtn) {
+                infoNavBtn.addEventListener("click", () => {
+                    showInfoMessage("📚 Student guide: Browse hostels & read reviews. Contact hostel directly for booking.");
+                });
+            }
+
+            // optional: any testimonial link? but just passive
+            const reviewsLink = document.querySelector('a[href="#testimonials"]');
+            if (reviewsLink) {
+                reviewsLink.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    document.getElementById("testimonials").scrollIntoView({ behavior: "smooth" });
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentDidLoad", () => {
+            renderHostels();
+            renderTestimonials();
+            setupEventListeners();
+        });
+
+        // ensure normal DOM ready
+        window.addEventListener("DOMContentLoaded", () => {
+            renderHostels();
+            renderTestimonials();
+            setupEventListeners();
+        });
+    </script>
+</body>
+
+</html>

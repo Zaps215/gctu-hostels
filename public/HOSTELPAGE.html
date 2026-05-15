@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Student Hostel · Find, Compare & Book Your Perfect Stay</title>
+    <!-- Google Fonts + Tailwind + simple baseline -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- custom config to extend tailwind -->
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            scroll-behavior: smooth;
+            background: #FEFCF5;
+        }
+
+        .gradient-badge {
+            background: linear-gradient(135deg, #F97316 0%, #FFB347 100%);
+        }
+
+        .card-hover {
+            transition: all 0.25s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: #F97316;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #EA580C;
+            transform: scale(0.98);
+        }
+
+        .btn-outline-orange {
+            border: 1.5px solid #F97316;
+            color: #F97316;
+            transition: all 0.2s;
+        }
+
+        .btn-outline-orange:hover {
+            background: #F97316;
+            color: white;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-card {
+            background: rgba(249, 115, 22, 0.03);
+            backdrop-filter: blur(0px);
+            border: 1px solid rgba(249, 115, 22, 0.15);
+        }
+
+        .feature-icon {
+            background: #FFF1E5;
+            color: #F97316;
+        }
+
+        .footer-bg {
+            background: #1F2937;
+        }
+
+        .hostel-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .hostel-card:hover img {
+            transform: scale(1.02);
+        }
+
+        .leaf-bg {
+            background-image: radial-gradient(circle at 10% 30%, rgba(249, 115, 22, 0.02) 2%, transparent 2.5%);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+
+<body class="leaf-bg">
+
+    <!-- ========== NAVIGATION (sticky) ========== -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-4 flex flex-wrap justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer group">
+                <div class="bg-orange-500 rounded-xl w-8 h-8 flex items-center justify-center shadow-sm"><i
+                        class="fas fa-bed text-white text-sm"></i></div>
+                <span class="font-bold text-xl tracking-tight text-gray-800">Hostel<span
+                        class="text-orange-500">Easy</span></span>
+            </div>
+            <div class="hidden md:flex gap-7 text-gray-600 font-medium">
+                <a href="#" class="hover:text-orange-500 transition">Home</a>
+                <a href="#why" class="hover:text-orange-500 transition">Why Us</a>
+                <a href="#hostels" class="hover:text-orange-500 transition">Hostels</a>
+                <a href="#testimonials" class="hover:text-orange-500 transition">Reviews</a>
+                <a href="#faq" class="hover:text-orange-500 transition">FAQ</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="hidden sm:block text-gray-700 font-medium hover:text-orange-600 transition">Sign
+                    in</button>
+                <button class="btn-primary text-white px-5 py-2 rounded-full font-semibold text-sm shadow-md">Book
+                    now</button>
+                <button id="mobileMenuBtn" class="md:hidden text-2xl text-gray-700"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <!-- Mobile menu (simple) -->
+        <div id="mobileMenu"
+            class="hidden md:hidden bg-white border-t border-gray-100 pb-4 px-5 flex flex-col gap-3 text-gray-700 font-medium">
+            <a href="#" class="py-2 hover:text-orange-500">Home</a>
+            <a href="#why" class="py-2 hover:text-orange-500">Why Us</a>
+            <a href="#hostels" class="py-2 hover:text-orange-500">Hostels</a>
+            <a href="#testimonials" class="py-2 hover:text-orange-500">Reviews</a>
+            <a href="#faq" class="py-2 hover:text-orange-500">FAQ</a>
+        </div>
+    </nav>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-12 md:pt-20 pb-12 md:pb-20">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div
+                    class="inline-flex items-center gap-2 bg-orange-100/70 text-orange-700 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+                    <i class="fas fa-graduation-cap text-orange-600"></i> <span>Trusted by 50,000+ students</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-gray-900">
+                    Find, compare & book your <span class="text-orange-500">Student Hostel</span></h1>
+                <p class="text-gray-500 text-lg mt-6 max-w-lg">Discover 5,000+ verified student hostels across the
+                    country. Clean, safe, and affordable — right near your campus.</p>
+                <div class="flex flex-wrap gap-4 mt-8">
+                    <button
+                        class="btn-primary text-white px-8 py-3 rounded-full font-semibold text-lg shadow-md flex items-center gap-2"><i
+                            class="fas fa-search"></i> Start exploring</button>
+                    <button
+                        class="btn-outline-orange px-6 py-3 rounded-full font-semibold flex items-center gap-2 bg-white"><i
+                            class="fas fa-play-circle circle"></i> How it works</button>
+                </div>
+                <div class="flex flex-wrap gap-6 mt-10">
+                    <div class="stat-card rounded-2xl px-4 py-2 flex items-center gap-3"><i
+                            class="fas fa-building text-orange-500 text-2xl"></i>
+                        <div>
+                            <div class="font-black text-gray-800 text-xl">5,000+</div>
+                            <div class="text-xs text-gray-500">Verified Hostels</div>
+                        </div>
+                    </div>
+                    <div class="stat-card rounded-2xl px-4 py-2 flex items-center gap-3"><i
+                            class="fas fa-smile text-orange-500 text-2xl"></i>
+                        <div>
+                            <div class="font-black text-gray-800 text-xl">50K+</div>
+                            <div class="text-xs text-gray-500">Happy Students</div>
+                        </div>
+                    </div>
+                    <div class="stat-card rounded-2xl px-4 py-2 flex items-center gap-3"><i
+                            class="fas fa-headset text-orange-500 text-2xl"></i>
+                        <div>
+                            <div class="font-black text-gray-800 text-xl">24/7</div>
+                            <div class="text-xs text-gray-500">Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div
+                    class="bg-gradient-to-br from-orange-100 to-amber-50 rounded-3xl overflow-hidden shadow-2xl border border-orange-200/50">
+                    <img src="https://placehold.co/600x450/FEE2D6/EA580C?text=Student+Hostel+Room"
+                        alt="Student hostel room preview" class="w-full h-auto object-cover mix-blend-multiply">
+                    <div
+                        class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-md flex items-center gap-2 text-sm font-semibold">
+                        <i class="fas fa-check-circle text-green-600"></i> Verified & Safe
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHY SECTION (4 pillars) ========== -->
+    <section id="why" class="bg-white/60 py-20 px-5">
+        <div class="max-w-7xl mx-auto text-center mb-14">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Everything you need to <span
+                    class="text-orange-500">find your next home.</span></h2>
+            <p class="text-gray-500 max-w-2xl mx-auto mt-4">We built HostelEasy so students can find safe, affordable
+                accommodation without the stress, scams, or surprise fees.</p>
+        </div>
+        <div class="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover">
+                <div class="feature-icon w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-5"><i
+                        class="fas fa-shield-alt"></i></div>
+                <h3 class="text-xl font-bold">Verified Hostels Only</h3>
+                <p class="text-gray-500 mt-2">Every hostel is physically inspected & re-verified annually — no scams, no
+                    fake listings.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover">
+                <div class="feature-icon w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-5"><i
+                        class="fas fa-star"></i></div>
+                <h3 class="text-xl font-bold">Honest Student Reviews</h3>
+                <p class="text-gray-500 mt-2">Real reviews from students who actually lived there, not paid ads or fake
+                    ratings.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover">
+                <div class="feature-icon w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-5"><i
+                        class="fas fa-map-marker-alt"></i></div>
+                <h3 class="text-xl font-bold">Near Every Major Uni</h3>
+                <p class="text-gray-500 mt-2">From KNUST to UG, UCC to Ashesi — walking distance near your campus.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover">
+                <div class="feature-icon w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-5"><i
+                        class="fas fa-tag"></i></div>
+                <h3 class="text-xl font-bold">Transparent Pricing</h3>
+                <p class="text-gray-500 mt-2">Pay the hostel price + small service fee. No hidden charges, secure
+                    payments.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FEATURED HOSTELS ========== -->
+    <section id="hostels" class="py-16 px-5">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end flex-wrap gap-4 mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800">Featured <span class="text-orange-500">Hostels</span>
+                    </h2>
+                    <p class="text-gray-500 mt-1">Top-rated accommodation options near major universities</p>
+                </div>
+                <button class="text-orange-600 font-semibold flex items-center gap-1">View all <i
+                        class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+                <!-- Hostel card 1 -->
+                <div
+                    class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 card-hover hostel-card">
+                    <div class="h-48 bg-amber-100 overflow-hidden"><img
+                            src="https://placehold.co/500x300/FDE9DD/EA580C?text=Premier+Hostel+KNUST"
+                            class="w-full h-full object-cover"></div>
+                    <div class="p-5">
+                        <div class="flex justify-between"><span
+                                class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">⭐ 4.9
+                                (142 reviews)</span><span class="font-bold text-orange-600">GH₵ 2,200/mo</span></div>
+                        <h3 class="font-bold text-xl mt-3">KNUST Premier Hostel</h3>
+                        <p class="text-gray-500 text-sm mt-1">Walking distance to campus, 24/7 security, high-speed
+                            WiFi, study lounge.</p>
+                        <div class="flex gap-3 mt-4 text-gray-500 text-xs"><span><i class="fas fa-wifi"></i> Free
+                                WiFi</span><span><i class="fas fa-shower"></i> Ensuite</span><span><i
+                                    class="fas fa-utensils"></i> Meal opt</span></div><button
+                            class="w-full mt-5 border border-orange-300 text-orange-700 py-2 rounded-xl font-semibold hover:bg-orange-50 transition">View
+                            details →</button>
+                    </div>
+                </div>
+                <!-- Hostel card 2 -->
+                <div
+                    class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 card-hover hostel-card">
+                    <div class="h-48 bg-amber-50 overflow-hidden"><img
+                            src="https://placehold.co/500x300/FFF0E5/EA580C?text=Legon+Heights"
+                            class="w-full h-full object-cover"></div>
+                    <div class="p-5">
+                        <div class="flex justify-between"><span
+                                class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">⭐ 4.8
+                                (206 reviews)</span><span class="font-bold text-orange-600">GH₵ 2,800/mo</span></div>
+                        <h3 class="font-bold text-xl mt-3">Legon Gardens Residence</h3>
+                        <p class="text-gray-500 text-sm mt-1">Close to University of Ghana, gym access, organised social
+                            events.</p>
+                        <div class="flex gap-3 mt-4 text-gray-500 text-xs"><span><i class="fas fa-dumbbell"></i>
+                                Gym</span><span><i class="fas fa-bolt"></i> Backup power</span><span><i
+                                    class="fas fa-laptop"></i> Study hubs</span></div><button
+                            class="w-full mt-5 border border-orange-300 text-orange-700 py-2 rounded-xl font-semibold hover:bg-orange-50 transition">View
+                            details →</button>
+                    </div>
+                </div>
+                <!-- Hostel card 3 -->
+                <div
+                    class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 card-hover hostel-card">
+                    <div class="h-48 bg-orange-50 overflow-hidden"><img
+                            src="https://placehold.co/500x300/FCEADF/EA580C?text=UCC+Maritime+Hostel"
+                            class="w-full h-full object-cover"></div>
+                    <div class="p-5">
+                        <div class="flex justify-between"><span
+                                class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">⭐ 4.7 (98
+                                reviews)</span><span class="font-bold text-orange-600">GH₵ 1,950/mo</span></div>
+                        <h3 class="font-bold text-xl mt-3">UCC Oceanview Hostel</h3>
+                        <p class="text-gray-500 text-sm mt-1">Near UCC campus, affordable shared rooms + private ensuite
+                            options.</p>
+                        <div class="flex gap-3 mt-4 text-gray-500 text-xs"><span><i class="fas fa-water"></i> 24/7
+                                water</span><span><i class="fas fa-lock"></i> Secure</span><span><i
+                                    class="fas fa-bicycle"></i> Bike storage</span></div><button
+                            class="w-full mt-5 border border-orange-300 text-orange-700 py-2 rounded-xl font-semibold hover:bg-orange-50 transition">View
+                            details →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STUDENT TESTIMONIALS ========== -->
+    <section id="testimonials" class="py-16 px-5 bg-white/50">
+        <div class="max-w-7xl mx-auto text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800">Student <span class="text-orange-500">Testimonials</span></h2>
+            <p class="text-gray-500 max-w-lg mx-auto mt-2">Hear from thousands of students who found their perfect homes
+                on our platform</p>
+        </div>
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div class="testimonial-card p-6 relative"><i
+                    class="fas fa-quote-left text-orange-300 text-3xl absolute opacity-30"></i>
+                <div class="relative z-10">
+                    <p class="text-gray-700 italic">“I found my hostel in under ten minutes. The filters let me search
+                        by distance from campus and price. Moved in the same week — couldn’t be smoother.”</p>
+                    <div class="flex items-center gap-3 mt-5">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white font-bold">
+                            DA</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">David Boama</h4>
+                            <p class="text-xs text-gray-400">University of Ghana</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card p-6"><i class="fas fa-quote-left text-orange-300 text-3xl opacity-30"></i>
+                <p class="text-gray-700 italic">“Verified hostels = peace of mind. No agent fees and everything was
+                    exactly as listed. I even got a quiet room with great Wi-Fi!”</p>
+                <div class="flex items-center gap-3 mt-5">
+                    <div
+                        class="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-700 font-bold">
+                        AM</div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Ama Serwaa</h4>
+                        <p class="text-xs text-gray-400">KNUST Student</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card p-6"><i class="fas fa-quote-left text-orange-300 text-3xl opacity-30"></i>
+                <p class="text-gray-700 italic">“No stress, no scams. Real reviews helped me avoid hostels with bad
+                    Wi-Fi & security issues. I’m staying for my second year now!”</p>
+                <div class="flex items-center gap-3 mt-5">
+                    <div
+                        class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold">
+                        YB</div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Yaw Boateng</h4>
+                        <p class="text-xs text-gray-400">UPSA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA + PRICING PREVIEW ========== -->
+    <section class="bg-gradient-to-r from-orange-50 to-amber-50 py-16 px-5 my-8">
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div>
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-800">Book your perfect student hostel in <span
+                        class="text-orange-600">minutes</span>, no hidden fees!</h3>
+                <p class="text-gray-600 mt-3 text-lg max-w-xl">See the full cost upfront: rent, utilities, and service
+                    charges — all listed. Flexible monthly or semester plans.</p><button
+                    class="btn-primary text-white px-8 py-3 rounded-full mt-6 text-lg font-semibold shadow-lg">Start
+                    Booking →</button>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-xl w-full max-w-sm border border-orange-200">
+                <div class="flex justify-between border-b pb-3"><span class="font-semibold">Secure Payment</span><i
+                        class="fas fa-credit-card text-orange-500"></i></div>
+                <div class="mt-4 space-y-2 text-gray-700">
+                    <div class="flex justify-between"><span>Hostel fee</span><span class="font-medium">GH₵ 2,500</span>
+                    </div>
+                    <div class="flex justify-between text-sm text-green-600"><span>Platform fee</span><span>FREE</span>
+                    </div>
+                    <div class="border-t pt-2 flex justify-between font-bold"><span>Total</span><span>GH₵ 2,500</span>
+                    </div>
+                </div><button class="w-full bg-orange-500 text-white mt-5 py-2 rounded-xl font-bold">Proceed to secure
+                    booking</button>
+                <p class="text-xs text-center text-gray-400 mt-2">No hidden charges · 24/7 support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ SECTION ========== -->
+    <section id="faq" class="py-16 px-5 max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold">Frequently asked <span class="text-orange-500">questions</span></h2>
+            <p class="text-gray-500">Get quick answers about booking, payments & documents</p>
+        </div>
+        <div class="space-y-5">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 transition hover:shadow">
+                <div class="flex justify-between items-center cursor-pointer">
+                    <h3 class="font-semibold text-lg flex gap-2"><i class="fas fa-check-circle text-orange-500"></i> Are
+                        all hostels physically verified?</h3><i class="fas fa-chevron-down text-orange-400"></i>
+                </div>
+                <p class="text-gray-500 mt-2 pl-7">Yes! Every listing is physically inspected by our team and
+                    re-verified annually. We check safety, cleanliness, and amenities so you get exactly what you book.
+                </p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold text-lg flex gap-2"><i class="fas fa-lock"></i> How do payments work?</h3>
+                    <i class="fas fa-chevron-down text-orange-400"></i>
+                </div>
+                <p class="text-gray-500 mt-2 pl-7">All payments are processed via secure gateway. You pay the hostel
+                    rent plus a small service fee (transparent). We never charge hidden fees.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold text-lg flex gap-2"><i class="fas fa-map-marked-alt"></i> Can I book near
+                        my specific campus?</h3><i class="fas fa-chevron-down text-orange-400"></i>
+                </div>
+                <p class="text-gray-500 mt-2 pl-7">Absolutely — use our filters to search by university, distance in
+                    kilometers, or neighborhood. We cover KNUST, UG, UCC, Ashesi, UPSA, GIMPA and more.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold text-lg flex gap-2"><i class="fas fa-headset"></i> What if I need support
+                        24/7?</h3><i class="fas fa-chevron-down text-orange-400"></i>
+                </div>
+                <p class="text-gray-500 mt-2 pl-7">Our student support team is available 24/7 via chat, email, or phone.
+                    We also have 500+ help articles to resolve any issue quickly.</p>
+            </div>
+        </div>
+        <div class="mt-12 text-center bg-orange-50 rounded-2xl p-8">
+            <p class="font-semibold text-gray-800">Still have questions?</p><button
+                class="btn-primary mt-3 text-white px-6 py-2 rounded-full">Contact support team <i
+                    class="fas fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer-bg text-gray-300 pt-14 pb-8 px-5 mt-10">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <div class="flex items-center gap-2">
+                    <div class="bg-orange-500 rounded-xl w-8 h-8 flex items-center justify-center"><i
+                            class="fas fa-bed text-white text-sm"></i></div><span
+                        class="font-bold text-white text-lg">HostelEasy</span>
+                </div>
+                <p class="text-sm mt-4 opacity-70">Find, compare & book verified student hostels stress-free.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3">Explore</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>Hostels near KNUST</li>
+                    <li>UG Legon residences</li>
+                    <li>UCC affordable stays</li>
+                    <li>Ashesi & GIMPA</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3">Support</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>Help Center</li>
+                    <li>Safety guidelines</li>
+                    <li>Report a listing</li>
+                    <li>24/7 chat support</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-3">Legal</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>Privacy Policy</li>
+                    <li>Terms of service</li>
+                    <li>Cookie preferences</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-400">© 2025 HostelEasy —
+            Empowering students with safe accommodation. All rights reserved.</div>
+    </footer>
+
+    <!-- simple mobile menu toggle -->
+    <script>
+        const btn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (btn && mobileMenu) {
+            btn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        // smooth faq little interaction: not required but nice, but just for simplicity we keep as is.
+        // optional: small hover interactions already fine.
+    </script>
+</body>
+
+</html>

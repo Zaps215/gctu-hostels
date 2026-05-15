@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GhanaStudentHostels | Central Hub for Student Accommodation</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fefcf5 0%, #f8f3e9 100%);
+            color: #1e2a2f;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            margin: 0 -32px;
+            padding-left: 32px;
+            padding-right: 32px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2b5f8a, #1f8a7c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo span {
+            color: #f4a261;
+            background: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #2c3e3f;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #f4a261;
+        }
+
+        .btn-outline {
+            border: 2px solid #2b5f8a;
+            background: transparent;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #2b5f8a;
+        }
+
+        .btn-outline:hover {
+            background: #2b5f8a;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #f4a261;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1e2a2f;
+        }
+
+        .btn-primary:hover {
+            background: #e76f51;
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: #f4a261;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #5a6e73;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Search & Filter */
+        .search-section {
+            background: white;
+            border-radius: 60px;
+            padding: 16px 24px;
+            margin: 30px 0 40px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            background: #f8f5ee;
+            border-radius: 60px;
+            padding: 6px 18px;
+            gap: 12px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 14px 0;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f8f5ee;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: #2b5f8a;
+            color: white;
+        }
+
+        /* Hostels Grid */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0 20px;
+        }
+
+        .hostels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .hostel-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.25s ease;
+            position: relative;
+        }
+
+        .hostel-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .availability-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .availability-badge.available {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .availability-badge.limited {
+            background: #f39c12;
+            color: white;
+        }
+
+        .availability-badge.closed {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .card-img {
+            background: linear-gradient(135deg, #cfe3df, #b8d4ce);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: #2b5f8a;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .price {
+            color: #e76f51;
+            font-weight: 800;
+        }
+
+        .location {
+            color: #6c7e82;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+        }
+
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .amenity-tag {
+            background: #f0eee9;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .book-redirect-btn {
+            width: 100%;
+            background: #2b5f8a;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+            margin-top: 12px;
+        }
+
+        .book-redirect-btn:hover:not(:disabled) {
+            background: #1f4a6e;
+            transform: scale(0.98);
+        }
+
+        .book-redirect-btn.disabled,
+        .book-redirect-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Dashboard / Notifications Panel */
+        .dashboard-panel {
+            background: linear-gradient(135deg, #ffffff, #fef9f0);
+            border-radius: 32px;
+            padding: 28px;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f0e5d8;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0e5d8;
+        }
+
+        .welcome-text h3 {
+            font-size: 1.5rem;
+        }
+
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notifications-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 12px;
+            background: #f8f5ee;
+            margin-bottom: 10px;
+            border-radius: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .notification-item.unread {
+            background: #fff3e0;
+            border-left: 4px solid #f4a261;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 32px;
+            padding: 32px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 40px;
+            border: 1px solid #ddd;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e2a2f;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            z-index: 1100;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo">Ghana<span>StudentHostels</span> <i class="fas fa-home"></i></div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#hostels">Hostels</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+            </ul>
+            <div class="auth-buttons" id="authButtons">
+                <button class="btn-outline" id="loginBtn">Login</button>
+                <button class="btn-primary" id="registerBtn">Register</button>
+            </div>
+            <div id="userInfo" style="display:none;">
+                <span id="userNameDisplay"></span>
+                <button class="btn-outline" id="logoutBtn" style="margin-left:12px;">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Find Your <span>Perfect Hostel</span> in Ghana</h1>
+            <p>Access all major student hostels in Accra, Kumasi, Legon — redirecting you to official booking pages</p>
+        </section>
+
+        <!-- Search & Filter -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search hostels by name or location...">
+            </div>
+            <div class="filter-group" id="filterGroup">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="available">Available Now</button>
+                <button class="filter-btn" data-filter="limited">Limited Spaces</button>
+                <button class="filter-btn" data-filter="accra">Accra</button>
+                <button class="filter-btn" data-filter="kumasi">Kumasi</button>
+            </div>
+        </div>
+
+        <!-- Hostels Grid -->
+        <div class="section-title" id="hostels">🏘️ Featured Ghana Hostels</div>
+        <div id="hostelsGrid" class="hostels-grid"></div>
+
+        <!-- Dashboard / Notifications Panel (visible only when logged in) -->
+        <div id="dashboardPanel" class="dashboard-panel" style="display:none;">
+            <div class="dashboard-header">
+                <div class="welcome-text">
+                    <h3>📋 Your Dashboard</h3>
+                    <p>Real-time availability alerts for your saved interests</p>
+                </div>
+                <div class="notification-bell" id="notificationBell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div>
+            </div>
+            <div id="notificationsContainer" class="notifications-list">
+                <p style="color: #999;">Loading notifications...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h3>Login to your account</h3>
+            <input type="email" id="loginEmail" placeholder="Student Email">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button class="btn-primary" id="doLoginBtn" style="width:100%">Login</button>
+            <button class="btn-outline" id="closeLoginBtn" style="width:100%; margin-top:10px;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <h3>Student Registration</h3>
+            <input type="text" id="regName" placeholder="Full Name">
+            <input type="email" id="regEmail" placeholder="Email">
+            <input type="text" id="regUniversity" placeholder="University">
+            <input type="password" id="regPassword" placeholder="Password">
+            <button class="btn-primary" id="doRegisterBtn" style="width:100%">Register</button>
+            <button class="btn-outline" id="closeRegisterBtn" style="width:100%; margin-top:10px;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="toastMsg" class="toast"></div>
+
+    <script>
+        // ---------- GHANA HOSTELS DATA with official booking URLs ----------
+        const hostelsData = [
+            {
+                id: 1,
+                name: "Legon Hill Hostel",
+                location: "University of Ghana, Legon - Accra",
+                price: "GHS 1,800/month",
+                amenities: ["WiFi", "Study Area", "Security", "Water Supply"],
+                area: "accra",
+                availability: "available",
+                officialUrl: "https://www.legonhillhostel.com/book",
+                icon: "fa-university"
+            },
+            {
+                id: 2,
+                name: "Pentagon Hostel Kumasi",
+                location: "KNUST, Kumasi",
+                price: "GHS 1,500/month",
+                amenities: ["WiFi", "Cafeteria", "Laundry", "Power Backup"],
+                area: "kumasi",
+                availability: "limited",
+                officialUrl: "https://www.pentagonhostelgh.com/booking",
+                icon: "fa-building"
+            },
+            {
+                id: 3,
+                name: "Afia Hostel - Accra Central",
+                location: "Near UPSA, Accra",
+                price: "GHS 2,200/month",
+                amenities: ["AC Rooms", "24/7 Security", "Gym", "Study Lounge"],
+                area: "accra",
+                availability: "available",
+                officialUrl: "https://www.afiahosptel.com/reserve",
+                icon: "fa-crown"
+            },
+            {
+                id: 4,
+                name: "Ghana Christian Hostel",
+                location: "Cape Coast",
+                price: "GHS 1,200/month",
+                amenities: ["Meal Plan", "WiFi", "Prayer Room"],
+                area: "accra",
+                availability: "closed",
+                officialUrl: "https://www.gcchostel.com/bookings",
+                icon: "fa-church"
+            },
+            {
+                id: 5,
+                name: "Ashesi Hostel Village",
+                location: "Berekuso, Eastern Region",
+                price: "GHS 3,000/month",
+                amenities: ["Premium WiFi", "Swimming Pool", "Study Pods", "Shuttle"],
+                area: "accra",
+                availability: "limited",
+                officialUrl: "https://www.ashesihostels.com/book",
+                icon: "fa-laptop-code"
+            },
+            {
+                id: 6,
+                name: "Tech Junction Hostel",
+                location: "Near Accra Technical University",
+                price: "GHS 1,600/month",
+                amenities: ["Fast WiFi", "Workspace", "Security", "Common Room"],
+                area: "accra",
+                availability: "available",
+                officialUrl: "https://www.techjunctionhostel.com/booking",
+                icon: "fa-microchip"
+            }
+        ];
+
+        // Authentication & Notification System
+        let currentUser = null;
+        let notifications = []; // Each notification: { id, hostelName, message, date, read, hostelId, availability }
+
+        // Helper: generate notifications based on hostel availability changes
+        function generateNotificationsForUser(userId) {
+            // For demo: create notifications for hostels with limited/available status
+            const storedNotifs = localStorage.getItem(`notifications_${userId}`);
+            if (storedNotifs) {
+                notifications = JSON.parse(storedNotifs);
+            } else {
+                notifications = [];
+                // Initial notifications: highlight available and limited hostels
+                hostelsData.forEach(hostel => {
+                    if (hostel.availability === 'available') {
+                        notifications.push({
+                            id: Date.now() + hostel.id,
+                            hostelName: hostel.name,
+                            message: `✅ ${hostel.name} has rooms AVAILABLE! Click to book.`,
+                            date: new Date().toISOString(),
+                            read: false,
+                            hostelId: hostel.id,
+                            availability: 'available'
+                        });
+                    } else if (hostel.availability === 'limited') {
+                        notifications.push({
+                            id: Date.now() + hostel.id + 100,
+                            hostelName: hostel.name,
+                            message: `⚠️ ${hostel.name} has LIMITED SPACES left! Book soon.`,
+                            date: new Date().toISOString(),
+                            read: false,
+                            hostelId: hostel.id,
+                            availability: 'limited'
+                        });
+                    } else if (hostel.availability === 'closed') {
+                        notifications.push({
+                            id: Date.now() + hostel.id + 200,
+                            hostelName: hostel.name,
+                            message: `🔒 ${hostel.name} booking portal is CLOSED. No availability.`,
+                            date: new Date().toISOString(),
+                            read: false,
+                            hostelId: hostel.id,
+                            availability: 'closed'
+                        });
+                    }
+                });
+                saveNotifications();
+            }
+            renderNotifications();
+        }
+
+        function saveNotifications() {
+            if (currentUser) {
+                localStorage.setItem(`notifications_${currentUser.id}`, JSON.stringify(notifications));
+            }
+        }
+
+        function markNotificationAsRead(notifId) {
+            const notif = notifications.find(n => n.id == notifId);
+            if (notif) notif.read = true;
+            saveNotifications();
+            renderNotifications();
+        }
+
+        function renderNotifications() {
+            const container = document.getElementById('notificationsContainer');
+            const countSpan = document.getElementById('notificationCount');
+            if (!container) return;
+
+            const unreadCount = notifications.filter(n => !n.read).length;
+            if (countSpan) countSpan.innerText = unreadCount;
+
+            if (notifications.length === 0) {
+                container.innerHTML = '<p style="color:#999;">✨ No notifications yet. Check back for hostel updates!</p>';
+                return;
+            }
+
+            container.innerHTML = notifications.map(notif => `
+            <div class="notification-item ${!notif.read ? 'unread' : ''}" data-id="${notif.id}">
+                <i class="fas ${notif.availability === 'available' ? 'fa-check-circle' : (notif.availability === 'limited' ? 'fa-exclamation-triangle' : 'fa-ban')}"></i>
+                <div style="flex:1">
+                    <strong>${notif.hostelName}</strong><br>
+                    <small>${notif.message}</small><br>
+                    <small style="color:#999;">${new Date(notif.date).toLocaleString()}</small>
+                </div>
+                ${!notif.read ? '<button class="btn-outline" style="padding:4px 12px;" onclick="markNotificationAsReadStatic(' + notif.id + ')">Mark read</button>' : ''}
+            </div>
+        `).join('');
+        }
+
+        window.markNotificationAsReadStatic = function (id) {
+            markNotificationAsRead(id);
+        };
+
+        // Hostel rendering with redirection
+        let currentFilter = "all";
+        let searchTerm = "";
+
+        function renderHostels() {
+            const grid = document.getElementById("hostelsGrid");
+            let filtered = [...hostelsData];
+
+            if (currentFilter === "available") {
+                filtered = filtered.filter(h => h.availability === "available");
+            } else if (currentFilter === "limited") {
+                filtered = filtered.filter(h => h.availability === "limited");
+            } else if (currentFilter === "accra") {
+                filtered = filtered.filter(h => h.area === "accra");
+            } else if (currentFilter === "kumasi") {
+                filtered = filtered.filter(h => h.area === "kumasi");
+            }
+
+            if (searchTerm.trim()) {
+                const term = searchTerm.toLowerCase();
+                filtered = filtered.filter(h => h.name.toLowerCase().includes(term) || h.location.toLowerCase().includes(term));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center;">No hostels found.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(hostel => {
+                let availabilityClass = hostel.availability;
+                let availabilityText = hostel.availability === 'available' ? '✅ Available' : (hostel.availability === 'limited' ? '⚠️ Limited' : '🔒 Closed');
+                let isDisabled = hostel.availability === 'closed';
+
+                return `
+                <div class="hostel-card">
+                    <div class="availability-badge ${availabilityClass}">${availabilityText}</div>
+                    <div class="card-img"><i class="fas ${hostel.icon}"></i></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-title">${hostel.name}</div>
+                            <div class="price">${hostel.price}</div>
+                        </div>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> ${hostel.location}</div>
+                        <div class="amenities">${hostel.amenities.map(a => `<span class="amenity-tag">${a}</span>`).join('')}</div>
+                        <button class="book-redirect-btn" data-url="${hostel.officialUrl}" data-availability="${hostel.availability}" ${isDisabled ? 'disabled' : ''}>
+                            ${isDisabled ? 'Portal Closed' : '📖 Book on Official Site →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            // attach redirect events
+            document.querySelectorAll('.book-redirect-btn').forEach(btn => {
+                if (!btn.disabled) {
+                    btn.addEventListener('click', (e) => {
+                        const url = btn.getAttribute('data-url');
+                        if (url && currentUser) {
+                            window.open(url, '_blank');
+                            showToast(`🔗 Redirecting to ${url}`, false);
+                            // add notification action?
+                        } else if (!currentUser) {
+                            showToast('❗ Please login first to access booking portals', true);
+                            document.getElementById('loginModal').style.display = 'flex';
+                        } else if (btn.getAttribute('data-availability') === 'closed') {
+                            showToast('This hostel portal is closed.', true);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Authentication logic
+        function registerUser(name, email, university, password) {
+            let users = JSON.parse(localStorage.getItem('ghana_hostel_users') || '[]');
+            if (users.find(u => u.email === email)) return false;
+            const newUser = { id: Date.now(), name, email, university, password };
+            users.push(newUser);
+            localStorage.setItem('ghana_hostel_users', JSON.stringify(users));
+            return newUser;
+        }
+
+        function loginUser(email, password) {
+            let users = JSON.parse(localStorage.getItem('ghana_hostel_users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('current_user', JSON.stringify(user));
+                return true;
+            }
+            return false;
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('current_user');
+            updateUIForAuth();
+            document.getElementById('dashboardPanel').style.display = 'none';
+            showToast('Logged out successfully', false);
+        }
+
+        function updateUIForAuth() {
+            const authDiv = document.getElementById('authButtons');
+            const userInfoDiv = document.getElementById('userInfo');
+            if (currentUser) {
+                authDiv.style.display = 'none';
+                userInfoDiv.style.display = 'inline-flex';
+                document.getElementById('userNameDisplay').innerText = `👋 ${currentUser.name}`;
+                document.getElementById('dashboardPanel').style.display = 'block';
+                // load notifications for user
+                generateNotificationsForUser(currentUser.id);
+            } else {
+                authDiv.style.display = 'flex';
+                userInfoDiv.style.display = 'none';
+                document.getElementById('dashboardPanel').style.display = 'none';
+                notifications = [];
+            }
+        }
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toastMsg');
+            toast.innerText = msg;
+            toast.style.backgroundColor = isError ? '#e74c3c' : '#2b5f8a';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // Event Listeners
+        document.getElementById('loginBtn').onclick = () => document.getElementById('loginModal').style.display = 'flex';
+        document.getElementById('registerBtn').onclick = () => document.getElementById('registerModal').style.display = 'flex';
+        document.getElementById('closeLoginBtn').onclick = () => document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('closeRegisterBtn').onclick = () => document.getElementById('registerModal').style.display = 'none';
+        document.getElementById('logoutBtn').onclick = () => logout();
+
+        document.getElementById('doLoginBtn').onclick = () => {
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPassword').value;
+            if (loginUser(email, pass)) {
+                document.getElementById('loginModal').style.display = 'none';
+                updateUIForAuth();
+                renderHostels();
+                showToast(`Welcome back ${currentUser.name}!`);
+            } else {
+                showToast('Invalid credentials', true);
+            }
+        };
+
+        document.getElementById('doRegisterBtn').onclick = () => {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const uni = document.getElementById('regUniversity').value;
+            const pass = document.getElementById('regPassword').value;
+            if (!name || !email || !pass) return showToast('Fill all fields', true);
+            const user = registerUser(name, email, uni, pass);
+            if (user) {
+                showToast('Registration successful! Please login.');
+                document.getElementById('registerModal').style.display = 'none';
+            } else {
+                showToast('Email already exists', true);
+            }
+        };
+
+        // Filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderHostels();
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            renderHostels();
+        });
+
+        // Load session
+        const savedUser = localStorage.getItem('current_user');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            updateUIForAuth();
+        }
+        renderHostels();
+    </script>
+</body>
+
+</html>

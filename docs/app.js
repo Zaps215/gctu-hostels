@@ -14,7 +14,7 @@ if (togglePassword && password) {
 }
 
 // Login form handler - SIMPLE VERSION
-loginForm.addEventListener('submit', function(e) {
+loginForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const inputUsername = document.getElementById('Username').value.trim();
@@ -22,7 +22,23 @@ loginForm.addEventListener('submit', function(e) {
 
     errorDisplay.innerText = "";
 
-    // Get user from localStorage
+    try {
+        console.log("Sending login request...");
+        // Send to backend API (NOT localStorage)
+        const response = await fetch('https://gctu-hostels.onrender.com/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: inputUsername, password: inputPassword })
+        });
+
+        const data = await response.json();
+         console.log("Response:", data);
+
+        if (response.ok) {
+            // Save user to localStorage (for frontend state)
+            localStorage.setItem('registeredUser', JSON.stringify(data.user));
+
+    /* Get user from localStorage
     const savedData = localStorage.getItem('registeredUser');
 
     if (!savedData) {
@@ -36,12 +52,13 @@ loginForm.addEventListener('submit', function(e) {
     console.log("Input password:", inputPassword);
 
     // Check credentials
-    if (inputUsername === user.username && inputPassword === user.password) {
+    if (inputUsername === user.username && inputPassword === user.password) {*/
+
         // Show success popup
         const loginPopup = document.getElementById('loginPopup');
         const popupMessage = document.getElementById('popupMessage');
         
-        const userName = user.fullName || user.username || 'Student';
+        const userName = data.user.fullName || data.user.username || 'Student';
         popupMessage.innerHTML = `Welcome back, ${userName}! Redirecting to Homepage...`;
         
         loginPopup.classList.add('show');
@@ -50,6 +67,10 @@ loginForm.addEventListener('submit', function(e) {
             window.location.href = 'homepage.html';
         };
     } else {
-        errorDisplay.innerText = "Wrong username or password!";
+        errorDisplay.innerText = data.error || "Login failed!";
+    }
+     } catch (err) {
+        console.error("Error:", err);
+        errorDisplay.innerText = "Cannot connect to server. Make sure backend is running on port 5000.";
     }
 });
