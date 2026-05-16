@@ -22,6 +22,7 @@ loginForm.addEventListener('submit', async function(e) {
 
     errorDisplay.innerText = "";
 
+
     try {
         console.log("Sending login request to backend...");
         // Send to backend API (NOT localStorage)
@@ -52,10 +53,14 @@ loginForm.addEventListener('submit', async function(e) {
             window.location.href = 'homepage.html';
         };
     } else {
-        errorDisplay.innerText = data.error || "Login failed!";
+        errorDisplay.innerText = data.error || "Login failed! Please check your details.";
     }
-     } catch (err) {
+ } catch (err) {
         console.error("Error:", err);
         errorDisplay.innerText = "Cannot connect to server. Make sure backend is running on port 5000.";
+    } finally {
+        // Always re-enable the button so user can try again
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Login';
     }
 });

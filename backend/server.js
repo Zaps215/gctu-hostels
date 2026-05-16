@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const bcrypt = require('bcryptjs'); 
 const app = express();
 
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use((req, res, next) => {
 });
 
 // Connection string (your actual string)
-const uri = "mongodb://emmanuelananga0_db_user:Pj6HB0tLcKKkNHv7@ac-wbkk3nm-shard-00-00.a8umlxc.mongodb.net:27017,ac-wbkk3nm-shard-00-01.a8umlxc.mongodb.net:27017,ac-wbkk3nm-shard-00-02.a8umlxc.mongodb.net:27017/gctu_hostels?ssl=true&replicaSet=atlas-hgj04x-shard-0&authSource=admin&retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI || "mongodb://emmanuelananga0_db_user:Pj6HB0tLcKKkNHv7@ac-wbkk3nm-shard-00-00.a8umlxc.mongodb.net:27017,ac-wbkk3nm-shard-00-01.a8umlxc.mongodb.net:27017,ac-wbkk3nm-shard-00-02.a8umlxc.mongodb.net:27017/gctu_hostels?ssl=true&replicaSet=atlas-hgj04x-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, { family: 4});
 
@@ -26,6 +27,7 @@ async function connectDB() {
         console.log('✅ Connected to MongoDB');
     } catch (err) {
         console.error('❌ MongoDB error:', err);
+        process.exit(1);
     }
 }
 connectDB();
@@ -44,6 +46,11 @@ app.post('/api/signup', async (req, res) => {
         const users = db.collection('users');
         
         const { fullName, username, email, password } = req.body;
+
+        // Basic validation — make sure nothing is empty
+        if (!fullName || !username || !email || !password) {
+            return res.status(400).json({ error: 'All fields are required.' });
+        }
         
         // Check if user already exists
         const existingUser = await users.findOne({ $or: [{ username }, { email }] });
@@ -51,12 +58,14 @@ app.post('/api/signup', async (req, res) => {
             return res.status(400).json({ error: 'Username or email already exists' });
         }
         
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         // Create new user
         const newUser = {
             fullName,
             username,
             email,
-            password, 
+            password: hashedPassword, // ✅ never store the raw password
             createdAt: new Date()
         };
         
@@ -64,7 +73,7 @@ app.post('/api/signup', async (req, res) => {
         res.json({ message: 'User created successfully', userId: result.insertedId });
         
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: "Something went wrong. Please try again." });
     }
 });
 
@@ -77,13 +86,25 @@ app.post('/api/login', async (req, res) => {
         
         const { username, password } = req.body;
         
+ if (!username || !password) {
+            return res.status(400).json({ error: 'Username and password are required.' });
+        }
+
         // Find user by username and password
         const user = await users.findOne({ username, password });
         
         if (!user) {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
+
+          // ✅ bcrypt.compare checks the typed password against the stored hash.
+        // It returns true if they match, false if not — without decrypting anything.
+        const passwordMatch = await bcrypt.compare(password, user.password);
         
+if (!passwordMatch) {
+            return res.status(401).json({ error: 'Invalid username or password.' });
+        }
+
         // Return user data (without password)
         res.json({ 
             message: 'Login successful', 
@@ -97,12 +118,12 @@ app.post('/api/login', async (req, res) => {
         
     } catch (err) {
          console.error('Login error:', err);
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: "Something went wrong. Please try again." });
     }
 });
 
-
-const PORT = 5000;
+// ✅ Use Render's dynamic port, fall back to 5000 for local development
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
